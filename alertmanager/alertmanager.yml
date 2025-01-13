@@ -7,8 +7,8 @@ route:
 receivers:
   - name: 'telegram-api'
     telegram_configs:
-    - bot_token: '<СЮДА ТОКЕН БОТА>'
+    - bot_token: '<INSERT BOT TOKEN>'
       api_url: 'https://api.telegram.org'
-      chat_id: <СЮДА ID ЧАТА> # Например, в формате -100XXXXX0XX58
+      chat_id: <INSERT CHAT ID> # Example format -100XXXXX0XX58
       parse_mode: ''
       message: "Alertmanager 📛\n--\n🔺 Alert: {{ .GroupLabels.alertname}}\n🔺 Severity: {{ .CommonLabels.severity }}\n📌 {{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
