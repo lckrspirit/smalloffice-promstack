@@ -1,3 +1,3 @@
-## Promstack - moniroting for SmallOffice/HomeLab
+## PromStack - moniroting for SmallOffice/HomeLab
 ![wall](promstack-title-wall.png)
 
