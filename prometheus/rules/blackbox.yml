@@ -1,0 +1,18 @@
+groups:
+- name: alerts
+  rules:
+  - alert: EndpointDown
+    expr: probe_success == 0
+    for: 10s
+    labels:
+      severity: "critical"
+    annotations:
+      summary:
+        "Endpoint {{ $labels.target }} is down."
+  - alert: SSLCertExpire
+    expr: probe_ssl_earliest_cert_expiry{job="blackbox"} - time() < 86400 * 3
+    for: 5m
+    labels:
+      severity: "warning"
+    annotations:
+      summary: "SSL certificate will expire in {{ $value | humanizeDuration }} (endpoint {{ $labels.target }})"

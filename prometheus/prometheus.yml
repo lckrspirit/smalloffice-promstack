@@ -1,0 +1,65 @@
+global:
+  scrape_interval: 30s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - alertmanager:9093
+
+rule_files:
+  - rules/blackbox.yml
+# - rules/example.yml
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+
+  - job_name: 'mktxp'
+    static_configs:
+      - targets: ['mktxp:49090']
+
+  - job_name: 'pve'
+    static_configs:
+      - targets:
+        - prx.example.local  # Proxmox VE node.
+    metrics_path: /pve
+    params:
+      module: [default]
+      cluster: ['1']
+      node: ['1']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: pve:9221  # PVE exporter.
+
+  - job_name: 'speedtest'
+    scrape_interval: 1h
+    scrape_timeout: 3m
+    static_configs:
+      - targets: ['speedtest:9798']
+
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://nixhub.ru
+        - https://ya.ru
+        - https://reddit.ru
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: target
+      - target_label: __address__
+        replacement: blackbox:9115

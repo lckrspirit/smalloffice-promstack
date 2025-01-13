@@ -1,0 +1,5 @@
+default:
+    user: prometheus@pve
+    token_name: "pve-exporter"
+    token_value: "<INSERT PVE TOKEN API>"
+    verify_ssl: false
