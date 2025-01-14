@@ -44,7 +44,7 @@ Before getting started, ensure you have the following installed:
 Clone the repository:
 
 ```bash
-git clone https://github.com/lckrspirit/smalloffice-promstack
+git clone https://github.com/lckrspirit/smalloffice-promstack /opt
 cd smalloffice-promstack
 ```
 
@@ -80,7 +80,7 @@ To ensure the monitoring stack starts automatically, you can use the provided `s
 1. Copy the service file:
 
    ```bash
-   sudo cp etc/promstack.service /etc/systemd/system/promstack.service /opt/
+   sudo cp etc/promstack.service /etc/systemd/system/promstack.service
    ```
 
 2. Reload the systemd daemon:
