@@ -22,11 +22,10 @@ Welcome to the **Prometheus & Grafana Monitoring** repository! This project prov
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
 3. [Configuration](#configuration)
-4. [Usage](#usage)
-5. [Dashboards](#dashboards)
-6. [Exporters](#exporters)
-7. [Contributing](#contributing)
-8. [License](#license)
+4. [Dashboards](#dashboards)
+5. [Exporters](#exporters)
+6. [Contributing](#contributing)
+7. [License](#license)
 
 ---
 
@@ -56,12 +55,24 @@ docker-compose up -d
 ```
 
 This will:
-- Start a Prometheus instance on `http://localhost:9090`
-- Start a Grafana instance on `http://localhost:3000`
+- Start a Prometheus instance on `http://prometheus:9090`
+- Start a Grafana instance on `http://grafana:3000`
+- Nginx start on `http://server-ip`
 
 Default Grafana credentials:
 - **Username**: `admin`
 - **Password**: `admin`
+
+After login in to Grafana via `http://server-ip`, setup prometeus data source:
+
+1. Navigate to `Configuration > Data Sources` in the side menu.
+2. Click Add data source.
+3. Select `Prometheus` from the list of available options.
+4. Configure the following:
+    *  URL: http://prometheus:9090 (if using Docker Compose)
+    *  Access: Server
+5. Click `Save & Test` to verify the connection.
+
 
 ---
 
@@ -87,13 +98,28 @@ Add or customize dashboards in the `grafana/provisioning/dashboards` directory. 
 
 ---
 
-## 📈 Usage
+## 🔌 Exporters
 
-1. Access Prometheus at [http://localhost:9090](http://localhost:9090).
-2. Access Grafana at [http://localhost:3000](http://localhost:3000).
-3. Import pre-configured dashboards from the `dashboards/` directory.
-4. Explore metrics and set up custom alerts.
+### Included Exporters
 
+- **Speedtest Exporter:** Measures and exports network speed metrics such as download and upload speeds.
+- **Blackbox Exporter:** Monitors endpoints via HTTP, HTTPS, DNS, TCP, ICMP, and more to assess service availability and performance.
+- **PVE Exporter:** Collects and exports metrics from Proxmox Virtual Environment for monitoring VMs and clusters.
+- **MKTXP Exporter:** Gathers detailed metrics from MikroTik devices, including interface usage, CPU, and memory statistics.
+
+*Note:* The list of exporters is continually updated, and more exporters may be added in the future.
+
+### Adding Exporters
+
+1. Install the desired exporter.
+2. Update `prometheus.yml` with the exporter’s endpoint.
+
+Example:
+```yaml
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+```
 ---
 
 ## 📊 Dashboards
@@ -108,27 +134,6 @@ To import a dashboard:
 1. Open Grafana.
 2. Navigate to `Dashboards > Import`.
 3. Upload the desired JSON file from the `dashboards/` folder. Alternative method, insert dashboard id. 
-
----
-
-## 🔌 Exporters
-
-### Included Exporters
-
-- **Node Exporter**: Collects system-level metrics.
-- **Custom Exporter**: Example custom metrics exporter.
-
-### Adding Exporters
-
-1. Install the desired exporter.
-2. Update `prometheus.yml` with the exporter’s endpoint.
-
-Example:
-```yaml
-  - job_name: 'node_exporter'
-    static_configs:
-      - targets: ['localhost:9100']
-```
 
 ---
 
