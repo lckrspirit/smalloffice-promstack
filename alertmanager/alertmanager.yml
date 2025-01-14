@@ -11,4 +11,4 @@ receivers:
       api_url: 'https://api.telegram.org'
       chat_id: <INSERT CHAT ID> # Example format -100XXXXX0XX58
       parse_mode: ''
-      message: "Alertmanager 📛\n--\n🔺 Alert: {{ .GroupLabels.alertname}}\n🔺 Severity: {{ .CommonLabels.severity }}\n📌 {{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+      message: "Alertmanager 📛\n--\n🔺 Alert: {{ .GroupLabels.alertname}}\n🔺 Severity: {{ .CommonLabels.severity }}\n---\n {{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
