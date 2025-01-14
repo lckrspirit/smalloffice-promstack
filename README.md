@@ -80,7 +80,7 @@ To ensure the monitoring stack starts automatically, you can use the provided `s
 1. Copy the service file:
 
    ```bash
-   sudo cp etc/promstack.service /etc/systemd/system/promstack.service
+   sudo cp etc/promstack.service /etc/systemd/system/promstack.service /opt/
    ```
 
 2. Reload the systemd daemon:
