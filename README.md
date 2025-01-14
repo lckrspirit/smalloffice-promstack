@@ -73,7 +73,28 @@ After login in to Grafana via `http://server-ip`, setup prometeus data source:
     *  Access: Server
 5. Click `Save & Test` to verify the connection.
 
+### Adding a Systemd Service
 
+To ensure the monitoring stack starts automatically, you can use the provided `systemd` service file:
+
+1. Copy the service file:
+
+   ```bash
+   sudo cp etc/promstack.service /etc/systemd/system/promstack.service
+   ```
+
+2. Reload the systemd daemon:
+
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+3. Enable the service to start on boot:
+
+   ```bash
+   sudo systemctl enable promstack.service
+   ```
+   
 ---
 
 ## ⚙️ Configuration
